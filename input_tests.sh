@@ -2,10 +2,10 @@
 
 # Number of tests to run
 
-echo "Starting valid tests for philosophers program..."
-./philosophers 50 800 2000 2000 7
-./philosophers 50 800 2000 2000
-./philosophers 1 1 1 1 1
+# echo "Starting valid tests for philosophers program..."
+# ./philosophers 50 800 2000 2000 7
+# ./philosophers 50 800 2000 2000
+# ./philosophers 1 1 1 1 1
 
 echo "\nStarting invalid tests for philosophers program..."
 # too many philosophers

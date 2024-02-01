@@ -6,7 +6,7 @@
 /*   By: vitenner <vitenner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:18:25 by vitenner          #+#    #+#             */
-/*   Updated: 2024/01/30 11:26:25 by vitenner         ###   ########.fr       */
+/*   Updated: 2024/02/01 14:35:34 by vitenner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,20 @@ typedef struct s_program
 }					t_program;
 
 
-int	parsing(int argc, char **argv);
+int	revelation(int argc, char **argv);
 int	atoi_num_only(const char *str);
 
+void    init_program(t_program *program, t_philo *philos);
+void    init_philosophers(t_program *program, t_philo *philos, char **argv, pthread_mutex_t *forks);
+void    spawn_philos(t_philo *philos, void *(*life)(void *));
+void	spawn_forks(pthread_mutex_t *forks, int num_forks);
 
 
+
+void cleanup(t_program *program, pthread_mutex_t *forks, int num_forks);
+
+
+size_t	get_current_time(void);
 // debug
 void print_philo_vars(t_philo *philo);
 void print_all_philos(t_program *program);

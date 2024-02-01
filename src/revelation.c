@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   revelation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vitenner <vitenner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 14:02:21 by vitenner          #+#    #+#             */
-/*   Updated: 2024/01/29 14:45:46 by vitenner         ###   ########.fr       */
+/*   Updated: 2024/02/01 14:32:44 by vitenner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	atoi_num_only(const char *str)
 	return (number);
 }
 
-int	parsing(int argc, char **argv)
+int	revelation(int argc, char **argv)
 {
 	int		i;
 

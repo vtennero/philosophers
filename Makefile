@@ -8,8 +8,10 @@ OBJ_DIR = obj
 
 # New source files
 COMMON_SRC = philosophers.c \
-parsing.c \
-utils_debug.c
+genesis.c \
+jericho.c \
+psalms.c \
+revelation.c \
 
 # Object files for the program, including common functionalities
 OBJ = $(addprefix $(OBJ_DIR)/, $(COMMON_SRC:.c=.o))

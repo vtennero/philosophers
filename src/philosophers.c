@@ -6,7 +6,7 @@
 /*   By: vitenner <vitenner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:18:28 by vitenner          #+#    #+#             */
-/*   Updated: 2024/01/30 11:20:22 by vitenner         ###   ########.fr       */
+/*   Updated: 2024/02/01 14:57:40 by vitenner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ size_t	get_current_time(void)
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-int	ft_usleep(size_t milliseconds)
+int		ft_usleep(size_t milliseconds)
 {
 	size_t	start;
 
@@ -33,97 +33,108 @@ int	ft_usleep(size_t milliseconds)
 
 void    test_timeod(void)
 {
-    struct timeval tv;
-    gettimeofday(&tv, NULL);
-    printf("Seconds since Epoch: %ld\n", tv.tv_sec);
-    printf("Microseconds: %ld\n", tv.tv_usec);
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+	printf("Seconds since Epoch: %ld\n", tv.tv_sec);
+	printf("Microseconds: %ld\n", tv.tv_usec);
 }
 
-void *philosopher_routine(void *arg)
+void    bethlehem(t_philo *philo)
 {
-	t_philo *philo = (t_philo *)arg; 
-    // test_timeod();
-    // Philosopher routine implementation
-    // Cast arg to t_philo* and use it for philosopher's behavior
+	// take left fork
+	pthread_mutex_lock(philo->l_fork);
+	pthread_mutex_lock(philo->write_lock);
+	printf("%ld %d has taken a fork\n", get_current_time(), philo->id);
+	pthread_mutex_unlock(philo->write_lock);
+
+	// take right fork
+	pthread_mutex_lock(philo->r_fork);
+	pthread_mutex_lock(philo->write_lock);
+	printf("%ld %d has taken a fork\n", get_current_time(), philo->id);
+	pthread_mutex_unlock(philo->write_lock);
+
+	// meal starts
+	philo->last_meal = get_current_time();
+	philo->eating = 1;
+	pthread_mutex_lock(philo->write_lock);
+	printf("%ld %d is eating\n", get_current_time(), philo->id);
+	pthread_mutex_unlock(philo->write_lock);
+	ft_usleep(philo->time_to_eat);
+
+	// unlock
+	pthread_mutex_unlock(philo->r_fork);
+	pthread_mutex_unlock(philo->l_fork);
+
+	// meal ends
+	philo->meals_eaten += 1;
+	philo->eating = 0;
+}
+
+void    gethsemane(t_philo *philo)
+{
+	pthread_mutex_lock(philo->write_lock);
+	printf("%ld %d is sleeping\n", get_current_time(), philo->id);
+	pthread_mutex_unlock(philo->write_lock);
+	ft_usleep(philo->time_to_sleep);
+}
+
+void    mountsinai(t_philo *philo)
+{
+	printf("%ld %d is thinking\n", get_current_time(), philo->id);
+	ft_usleep(1000);
+}
+
+void	death(t_philo *philo)
+{
+	int	sentence;
+
+	sentence = get_current_time() - philo->last_meal - philo->time_to_die;
+	if (sentence < 0)
+	{
+		pthread_mutex_lock(philo->dead_lock);
+		*(philo->dead) = 1;
+		pthread_mutex_unlock(philo->dead_lock);
+		pthread_mutex_lock(philo->write_lock);
+		printf("💀 %ld %d died\n", get_current_time(), philo->id);
+		// printf("%ld %d died\n", get_current_time(), philo->id);
+		pthread_mutex_unlock(philo->write_lock);
+	}
+}
+
+void *life(void *arg)
+{
+	t_philo *philo;
+
+	philo = (t_philo *)arg;
 	while (!(*philo->dead))
 	{
-		printf("%ld %d is eating\n", get_current_time(), philo->id);
-        philo->eating = 1;
-        philo->last_meal = get_current_time();
-        ft_usleep(philo->time_to_eat);
-        philo->eating = 0;
-		printf("%ld %d is sleeping\n", get_current_time(), philo->id);
-		ft_usleep(philo->time_to_sleep);
-		printf("%ld %d is thinking\n", get_current_time(), philo->id);
-		ft_usleep(1000);
-
+		death(philo);
+		bethlehem(philo);
+		gethsemane(philo);
+		mountsinai(philo);
 	}
-
-
-    return NULL;
+	return (NULL);
 }
+
 size_t get_time_in_ms() {
-    struct timeval tv;
-    gettimeofday(&tv, NULL);
-    return (size_t)((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+	return (size_t)((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
+
 int main(int argc, char **argv)
 {
-	if (!parsing(argc, argv))
+	t_program		program;
+	t_philo			philos[201];
+	pthread_mutex_t	forks[201];
+
+
+	if (!revelation(argc, argv))
 		return (0);
-	else
-		printf("all good\n");
-
-	t_program program;
-    t_philo philos[atoi_num_only(argv[1])]; // Declare array of t_philo on the stack
-    int i;
-
-    // Initialize mutexes and other shared resources
-    pthread_mutex_init(&program.dead_lock, NULL);
-    pthread_mutex_init(&program.meal_lock, NULL);
-    pthread_mutex_init(&program.write_lock, NULL);
-    program.dead_flag = 0;
-
-    // Set the program's philosopher pointer to the array
-    program.philos = philos;
-
-    // Initialize philosophers
-    for (i = 0; i < atoi_num_only(argv[1]); i++)
-	{
-        program.philos[i].id = i;
-        program.philos[i].eating = 0;
-        program.philos[i].meals_eaten = 0;
-        program.philos[i].last_meal = 0;
-        program.philos[i].time_to_die = atoi_num_only(argv[2]);
-        program.philos[i].time_to_eat = atoi_num_only(argv[3]);
-        program.philos[i].time_to_sleep = atoi_num_only(argv[4]);
-        program.philos[i].start_time = get_current_time();
-        program.philos[i].num_of_philos = atoi_num_only(argv[1]);
-        program.philos[i].num_times_to_eat = atoi_num_only(argv[5]);
-        program.philos[i].dead = &program.dead_flag;
-		
-        // Initialize other fields...
-        program.philos[i].dead_lock = &program.dead_lock;
-        program.philos[i].meal_lock = &program.meal_lock;
-        program.philos[i].write_lock = &program.write_lock;
-        // Initialize forks (mutexes) here or assign shared forks
-    }
-
-    // Create philosopher threads
-    for (i = 0; i < atoi_num_only(argv[1]); i++) 
-	{
-        pthread_create(&program.philos[i].thread, NULL, philosopher_routine, &program.philos[i]);
-    }
-	// print_all_philos(&program);
-
-    // Join philosopher threads
-    for (i = 0; i < atoi_num_only(argv[1]); i++) {
-        pthread_join(program.philos[i].thread, NULL);
-    }
-    // Cleanup
-    pthread_mutex_destroy(&program.dead_lock);
-    pthread_mutex_destroy(&program.meal_lock);
-    pthread_mutex_destroy(&program.write_lock);
-
+	init_program(&program, philos);
+	spawn_forks(forks, atoi_num_only(argv[1]));
+	init_philosophers(&program, philos, argv, forks);
+	spawn_philos(philos, life);
+	cleanup(&program, forks, atoi_num_only(argv[1]));
 	return (1);
 }
