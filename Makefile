@@ -1,6 +1,7 @@
 # Compiler and flags
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -lpthread -Isrc/
+CFLAGS = -Wall -Wextra -Werror -Isrc/
+TFLAG = -lpthread 
 
 # Directories
 SRC_DIR = src
@@ -12,6 +13,8 @@ genesis.c \
 jericho.c \
 psalms.c \
 revelation.c \
+routine.c \
+utils.c
 
 # Object files for the program, including common functionalities
 OBJ = $(addprefix $(OBJ_DIR)/, $(COMMON_SRC:.c=.o))
@@ -26,7 +29,7 @@ all: $(EXEC)
 
 # Program executable rule
 $(EXEC): $(OBJ)
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ $(TFLAG) -o $@
 
 # Generic rule for object files, now correctly handles all sources in SRC_DIR
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
