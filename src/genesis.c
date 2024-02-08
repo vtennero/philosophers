@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "philosophers.h"
+#include "philosophers.h"
 
-void    init_program(t_program *program, t_philo *philos)
+void init_program(t_program *program, t_philo *philos)
 {
 	// Initialize mutexes and other shared resources
 	pthread_mutex_init(&program->dead_lock, NULL);
@@ -24,12 +24,12 @@ void    init_program(t_program *program, t_philo *philos)
 	program->philos = philos;
 }
 
-void    init_philosophers(t_program *program, t_philo *philos, char **argv, pthread_mutex_t *forks)
+void init_philosophers(t_program *program, t_philo *philos, char **argv, pthread_mutex_t *forks)
 {
 	int i;
 
 	i = 0;
-		// Initialize philosophers
+	// Initialize philosophers
 	for (i = 0; i < atoi_num_only(argv[1]); i++)
 	{
 		philos[i].id = i;
@@ -58,21 +58,32 @@ void    init_philosophers(t_program *program, t_philo *philos, char **argv, pthr
 	}
 }
 
-void    spawn_philos(t_philo *philos, void *(*life)(void *))
+void spawn_philos(t_philo *philos, void *(*life)(void *))
 {
-		for (int i = 0; i < philos[i].num_of_philos; i++) {
-		pthread_create(&philos[i].thread, NULL, life, &philos[i]);
+	int i;
 
+	i = 0;
+	while (i < philos[i].num_of_philos)
+	{
+		pthread_create(&philos[i].thread, NULL, life, &philos[i]);
+		i++;
 	}
-		for (int i = 0; i < philos[i].num_of_philos; i++) {
+	i = 0;
+	while (i < philos[i].num_of_philos)
+	{
 		pthread_join(philos[i].thread, NULL);
+		i++;
 	}
 }
 
-void	spawn_forks(pthread_mutex_t *forks, int num_forks)
+void spawn_forks(pthread_mutex_t *forks, int num_forks)
 {
-	// forks
-	for (int i = 0; i < num_forks; i++) {
+	int i;
+
+	i = 0;
+	while (i < num_forks)
+	{
 		pthread_mutex_init(&forks[i], NULL);
+		i++;
 	}
 }

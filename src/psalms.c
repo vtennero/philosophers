@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "philosophers.h"
+#include "philosophers.h"
 
 void print_philo_vars(t_philo *philo)
 {
@@ -29,13 +29,18 @@ void print_philo_vars(t_philo *philo)
 
 void print_all_philos(t_program *program)
 {
-	printf("[DEBUG] print_all_philos\n");
-    int num_philos = program->philos[0].num_of_philos;
-	printf("[DEBUG] print_all_philos: num_philos = %d\n", num_philos);
-    
-	for (int i = 0; i < num_philos; i++) {
+    int i;
+    int num_philos;
+
+    i = 0;
+    num_philos = program->philos[0].num_of_philos;
+    printf("[DEBUG] print_all_philos\n");
+    printf("[DEBUG] print_all_philos: num_philos = %d\n", num_philos);
+    while (i < num_philos)
+    {
         printf("Philo %d:\n", i + 1);
         print_philo_vars(&program->philos[i]);
         printf("\n");
+        i++;
     }
 }

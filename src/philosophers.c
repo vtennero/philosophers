@@ -48,18 +48,49 @@ void *life(void *arg)
 	return (NULL);
 }
 
+void *god(void *arg)
+{
+	t_program *program = (t_program *)arg;
+	size_t current_time;
+
+	while (!program->dead_flag)
+	{
+
+		for (int i = 0; i < program->philos[0].num_of_philos; i++)
+		{
+			pthread_mutex_lock(&program->philos[i].write_lock); // Corrected
+			current_time = get_current_time();
+			if (program->philos[i].eating == 0 && (current_time - program->philos[i].last_meal > program->philos[i].time_to_die))
+			{
+				printf("💀 %ld %d died\n", get_current_time(), program->philos[i].id);
+				pthread_mutex_unlock(&program->philos[i].write_lock); // Corrected
+				pthread_mutex_lock(&program->dead_lock);
+				program->dead_flag = 1;
+				pthread_mutex_unlock(&program->dead_lock);
+				break;
+			}
+			pthread_mutex_unlock(&program->philos[i].write_lock); // Corrected
+		}
+		ft_usleep(10);
+	}
+	return (NULL);
+}
+
 int main(int argc, char **argv)
 {
 	t_program program;
 	t_philo philos[201];
 	pthread_mutex_t forks[201];
+	pthread_mutex_t god_thread;
 
 	if (!revelation(argc, argv))
 		return (0);
 	init_program(&program, philos);
 	spawn_forks(forks, atoi_num_only(argv[1]));
 	init_philosophers(&program, philos, argv, forks);
+	pthread_create(&god_thread, NULL, god, &program);
 	spawn_philos(philos, life);
+	pthread_join(god_thread, NULL);
 	cleanup(&program, forks, atoi_num_only(argv[1]));
 	return (1);
 }
