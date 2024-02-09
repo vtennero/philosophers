@@ -1,0 +1,169 @@
+./philosophers 3 10000 100 200 10
+./philosophers 4 10000 100 200 20
+./philosophers 5 10000 100 200 30
+./philosophers 3 10000 100 200 10
+./philosophers 200 800 2000 2000 7
+./philosophers 4 100 1000000 100
+./philosophers 97 4372 5891 1245 3
+./philosophers 173 8927 6698 2156 2
+./philosophers 42 6543 789 3839 1
+./philosophers 125 3254 9217 4823 0
+./philosophers 86 7865 1256 9876 3
+./philosophers 155 2211 5893 7632 2
+./philosophers 23 4239 3278 5496 3
+./philosophers 178 654 9087 2398 1
+./philosophers 63 9213 5487 2389 2
+./philosophers 192 7654 2310 987 1
+./philosophers 76 5432 8765 2901 3
+./philosophers 109 3289 9876 1234 2
+./philosophers 82 7432 9847 5621 1
+./philosophers 131 912 5643 8765 2
+./philosophers 57 2435 7869 1209 1
+./philosophers 96 7869 2345 6543 0
+./philosophers 114 8754 1234 7654 3
+./philosophers 183 5643 8907 3412 1
+./philosophers 68 789 2134 8976 0
+./philosophers 148 9876 3421 9087 3
+./philosophers 87 1234 8765 4321 1
+./philosophers 175 3456 7890 5678 3
+./philosophers 99 231 7654 9876 1
+./philosophers 179 7890 4321 8765 0
+./philosophers 54 123 5678 9012 2
+./philosophers 167 2345 9876 5432 3
+./philosophers 40 6789 9012 2345 1
+./philosophers 122 7890 5678 1234 3
+./philosophers 71 5432 9012 3456 2
+./philosophers 144 6543 8765 2198 1
+./philosophers 61 7654 4567 8901 0
+./philosophers 191 8901 2345 5432 2
+./philosophers 77 5678 9012 3456 3
+./philosophers 108 9876 5432 9012 2
+./philosophers 80 6789 1234 5678 1
+./philosophers 137 9012 3456 7890 3
+./philosophers 89 3456 7890 1234 1
+./philosophers 159 9876 5432 9012 2
+./philosophers 24 1234 5678 9012 0
+./philosophers 116 7890 1234 5678 3
+./philosophers 185 4321 8765 2109 1
+./philosophers 65 8765 2109 6543 2
+./philosophers 195 9012 3456 7890 1
+./philosophers 83 3210 7654 5432 3
+./philosophers 128 9876 5432 1098 1
+./philosophers 50 8765 2109 9876 2
+./philosophers 142 9012 3456 6789 1
+./philosophers 75 6543 2109 5678 3
+./philosophers 112 5432 1098 8765 2
+./philosophers 78 6789 1234 9012 1
+./philosophers 139 4321 8765 2109 0
+./philosophers 91 9876 5432 1098 3
+./philosophers 163 9012 3456 6789 1
+./philosophers 28 6543 2109 5678 2
+./philosophers 121 5432 1098 8765 1
+./philosophers 72 6789 1234 9012 3
+./philosophers 146 4321 8765 2109 1
+./philosophers 59 9876 5432 1098 2
+./philosophers 134 9012 3456 6789 0
+./philosophers 84 6543 2109 5678 3
+./philosophers 107 5432 1098 8765 1
+./philosophers 81 6789 1234 9012 2
+./philosophers 140 4321 8765 2109 3
+./philosophers 92 9876 5432 1098 1
+./philosophers 164 9012 3456 6789 2
+./philosophers 29 6543 2109 5678 0
+./philosophers 120 5432 1098 8765 3
+./philosophers 73 6789 1234 9012 1
+./philosophers 145 4321 8765 2109 2
+./philosophers 60 9876 5432 1098 3
+./philosophers 133 9012 3456 6789 1
+./philosophers 85 6543 2109 5678 2
+./philosophers 106 5432 1098 8765 3
+./philosophers 79 6789 1234 9012 1
+./philosophers 138 4321 8765 2109 2
+./philosophers 90 9876 5432 1098 1
+./philosophers 162 9012 3456 6789 3
+./philosophers 30 6543 2109 5678 1
+./philosophers 97 4372 5891 1245
+./philosophers 173 8927 6698 2156
+./philosophers 42 6543 789 3839
+./philosophers 125 3254 9217 4823
+./philosophers 86 7865 1256 9876
+./philosophers 155 2211 5893 7632
+./philosophers 23 4239 3278 5496
+./philosophers 178 654 9087 2398
+./philosophers 63 9213 5487 2389
+./philosophers 192 7654 2310 987
+./philosophers 76 5432 8765 2901
+./philosophers 109 3289 9876 1234
+./philosophers 82 7432 9847 5621
+./philosophers 131 912 5643 8765
+./philosophers 57 2435 7869 1209
+./philosophers 96 7869 2345 6543
+./philosophers 114 8754 1234 7654
+./philosophers 183 5643 8907 3412
+./philosophers 68 789 2134 8976
+./philosophers 148 9876 3421 9087
+./philosophers 87 1234 8765 4321
+./philosophers 175 3456 7890 5678
+./philosophers 99 231 7654 9876
+./philosophers 179 7890 4321 8765
+./philosophers 54 123 5678 9012
+./philosophers 167 2345 9876 5432
+./philosophers 40 6789 9012 2345
+./philosophers 122 7890 5678 1234
+./philosophers 71 5432 9012 3456
+./philosophers 144 6543 8765 2198
+./philosophers 61 7654 4567 8901
+./philosophers 191 8901 2345 5432
+./philosophers 77 5678 9012 3456
+./philosophers 108 9876 5432 9012
+./philosophers 80 6789 1234 5678
+./philosophers 137 9012 3456 7890
+./philosophers 89 3456 7890 1234
+./philosophers 159 9876 5432 9012
+./philosophers 24 1234 5678 9012
+./philosophers 116 7890 1234 5678
+./philosophers 185 4321 8765 2109
+./philosophers 65 8765 2109 6543
+./philosophers 195 9012 3456 7890
+./philosophers 83 3210 7654 5432
+./philosophers 128 9876 5432 1098
+./philosophers 50 8765 2109 9876
+./philosophers 142 9012 3456 6789
+./philosophers 75 6543 2109 5678
+./philosophers 112 5432 1098 8765
+./philosophers 78 6789 1234 9012
+./philosophers 139 4321 8765 2109
+./philosophers 91 9876 5432 1098
+./philosophers 163 9012 3456 6789
+./philosophers 28 6543 2109 5678
+./philosophers 121 5432 1098 8765
+./philosophers 72 6789 1234 9012
+./philosophers 146 4321 8765 2109
+./philosophers 59 9876 5432 1098
+./philosophers 134 9012 3456 6789
+./philosophers 84 6543 2109 5678
+./philosophers 107 5432 1098 8765
+./philosophers 81 6789 1234 9012
+./philosophers 140 4321 8765 2109
+./philosophers 92 9876 5432 1098
+./philosophers 164 9012 3456 6789
+./philosophers 29 6543 2109 5678
+./philosophers 120 5432 1098 8765
+./philosophers 73 6789 1234 9012
+./philosophers 145 4321 8765 2109
+./philosophers 60 9876 5432 1098
+./philosophers 133 9012 3456 6789
+./philosophers 85 6543 2109 5678
+./philosophers 106 5432 1098 8765
+./philosophers 79 6789 1234 9012
+./philosophers 138 4321 8765 2109
+./philosophers 90 9876 5432 1098
+./philosophers 162 9012 3456 6789
+./philosophers 30 6543 2109 5678
+./philosophers 138 26151 14625 26234
+./philosophers 86 16394 20636 25019
+./philosophers 169 19792 10441 16854
+./philosophers 54 23040 27692 14547 2
+./philosophers 167 17362 22272 26879 3
+./philosophers 123 29917 17663 22594 1
+./philosophers 89 27012 29375 28704 3
