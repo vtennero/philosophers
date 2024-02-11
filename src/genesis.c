@@ -71,9 +71,16 @@ void spawn_philos(t_philo *philos, void *(*life)(void *))
 	i = 0;
 	while (i < philos[i].num_of_philos)
 	{
+		pthread_mutex_lock(philos->write_lock);
+		printf("spawn_philos: pthread_join(philos[%d].thread, NULL);\n", i);
+		pthread_mutex_unlock(philos->write_lock);
 		pthread_join(philos[i].thread, NULL);
 		i++;
+		printf("spawn_philos: pthread_join end of loop\n");
 	}
+	pthread_mutex_lock(philos->write_lock);
+	printf("spawn_philos END %d\n", philos->id);
+	pthread_mutex_unlock(philos->write_lock);
 }
 
 void spawn_forks(pthread_mutex_t *forks, int num_forks)

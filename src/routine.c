@@ -26,7 +26,7 @@ int can_continue(t_philo *philo) {
 void bethlehem(t_philo *philo)
 {
 	pthread_mutex_lock(philo->write_lock);
-	// printf("%ld %d bethlehem starts\n", get_current_time(), philo->id);
+	printf("%ld %d bethlehem starts\n", get_current_time(), philo->id);
 	pthread_mutex_unlock(philo->write_lock);
 
     if (!can_continue(philo)) return;
@@ -127,7 +127,7 @@ void bethlehem1(t_philo *philo)
 void gethsemane(t_philo *philo)
 {
 	pthread_mutex_lock(philo->write_lock);
-	// printf("%ld %d gethsemane starts\n", get_current_time(), philo->id);
+	printf("%ld %d gethsemane starts\n", get_current_time(), philo->id);
 	pthread_mutex_unlock(philo->write_lock);
 
 	pthread_mutex_lock(philo->dead_lock);
@@ -146,7 +146,7 @@ void gethsemane(t_philo *philo)
 void mountsinai(t_philo *philo)
 {
 	pthread_mutex_lock(philo->write_lock);
-	// printf("%ld %d mountsinai starts\n", get_current_time(), philo->id);
+	printf("%ld %d mountsinai starts\n", get_current_time(), philo->id);
 	pthread_mutex_unlock(philo->write_lock);
 	
 	pthread_mutex_lock(philo->dead_lock);

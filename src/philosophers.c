@@ -49,9 +49,13 @@ void	*life(void *arg)
 		bethlehem(philo);
 		gethsemane(philo);
 		mountsinai(philo);
-		// printf("philo %d cycle philo->dead: %d end of while loop\n", philo->id, *philo->dead);
+		pthread_mutex_lock(philo->write_lock);
+		printf("philo %d cycle philo->dead: %d end of while loop\n", philo->id, *philo->dead);
+		pthread_mutex_unlock(philo->write_lock);
 	}
-	// printf("one philo is dead\n");
+	pthread_mutex_lock(philo->write_lock);
+	printf("life: %d END one philo is dead\n", philo->id);
+	pthread_mutex_unlock(philo->write_lock);
 	return (NULL);
 }
 
@@ -64,11 +68,15 @@ void	*god(void *arg)
 
 	while (!program->dead_flag)
 	{
+		// pthread_mutex_lock(program->philos[i].write_lock);
 		// printf("god: while (!program->dead_flag)\n");
+		// pthread_mutex_unlock(program->philos[i].write_lock);
 		i = 0;
 		while (i < program->philos[0].num_of_philos)
 		{
-			// printf("god: while (i < program->philos[0].num_of_philos)\n");
+		// pthread_mutex_lock(program->philos[i].write_lock);
+		// 	printf("god: while (i < program->philos[0].num_of_philos)\n");
+		// pthread_mutex_unlock(program->philos[i].write_lock);
 			current_time = get_current_time();
 			if (program->philos[i].last_meal)
 				calc = current_time - program->philos[i].last_meal - program->philos[i].time_to_die;
@@ -93,15 +101,22 @@ void	*god(void *arg)
 				pthread_mutex_unlock(&program->dead_lock);
 				
 				// Optionally, break here if you want to stop checking other philosophers once one is dead
-				break;
+				pthread_mutex_lock(program->philos[i].write_lock);
+				printf("god: break\n");
+				pthread_mutex_unlock(program->philos[i].write_lock);
+				break ;
 			}
 			i++;
 		}
+		// pthread_mutex_lock(program->philos[0].write_lock);
+		// printf("god: while (!program->dead_flag)\n");
+		// pthread_mutex_unlock(program->philos[0].write_lock);
+
 		// Short sleep to prevent a tight loop consuming too much CPU
 		// ft_usleep(10); // Assuming ft_usleep is a wrapper for usleep or similar
 	}
 	// Do not unlock the write_lock here to maintain the block on printing
-	return NULL;
+	return (NULL);
 }
 
 int	main(int argc, char **argv)
