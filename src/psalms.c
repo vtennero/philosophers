@@ -44,3 +44,18 @@ void print_all_philos(t_program *program)
         i++;
     }
 }
+
+void	print_params(int argc, char **argv)
+{
+    printf("[DEBUG] Program Parameters\n");
+    if (argc == 5 || argc == 6)
+	{
+		printf("number_of_philosophers = %d\n", atoi_num_only(argv[1]));
+		printf("time_to_die = %d\n",  atoi_num_only(argv[2]));
+		printf("time_to_eat = %d\n",  atoi_num_only(argv[3]));
+		printf("time_to_sleep = %d\n",  atoi_num_only(argv[4]));
+	}
+    if (argc == 6)
+		printf("number_of_times_each_philosopher_must_eat = %d\n", atoi_num_only(argv[5]));
+    printf("--------------------\n");
+}

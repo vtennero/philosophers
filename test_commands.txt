@@ -1,7 +1,28 @@
+
+./philosophers 3 300 100 200 10
+./philosophers 2 500 200 300
+./philosophers 4 1000 400 600
+./philosophers 3 800 300 500
+./philosophers 5 1200 500 700
+./philosophers 2 400 150 250
+./philosophers 3 700 250 450
+./philosophers 4 900 350 550
+./philosophers 5 1100 450 650
+./philosophers 6 1300 550 750
+./philosophers 7 1500 650 850
+./philosophers 8 1700 750 950
+./philosophers 2 600 250 350
+./philosophers 4 800 300 500
+./philosophers 6 1000 400 600
+./philosophers 5 900 350 550
+./philosophers 3 500 200 300
+./philosophers 4 700 250 450
+./philosophers 5 850 325 525
+./philosophers 6 950 375 575
+./philosophers 7 1050 425 625
 ./philosophers 3 10000 100 200 10
 ./philosophers 4 10000 100 200 20
 ./philosophers 5 10000 100 200 30
-./philosophers 3 10000 100 200 10
 ./philosophers 200 800 2000 2000 7
 ./philosophers 4 100 1000000 100
 ./philosophers 97 4372 5891 1245 3

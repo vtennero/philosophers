@@ -12,7 +12,7 @@
 
 #include "philosophers.h"
 
-void death(t_philo *philo)
+void	death(t_philo *philo)
 {
 	// Calculate the time since the last meal
 	size_t time_since_last_meal = get_current_time() - philo->last_meal;
@@ -30,20 +30,20 @@ void death(t_philo *philo)
 	}
 }
 
-void *life(void *arg)
+void	*life(void *arg)
 {
 	t_philo *philo;
 	int		is_dead;
 
 	philo = (t_philo *)arg;
-    while (1)
-    {
-        pthread_mutex_lock(philo->dead_lock);
-        is_dead = *philo->dead;
-        pthread_mutex_unlock(philo->dead_lock);
+	while (1)
+	{
+		pthread_mutex_lock(philo->dead_lock);
+		is_dead = *philo->dead;
+		pthread_mutex_unlock(philo->dead_lock);
 
-        if (is_dead)
-            break; // Exit the loop if philo is dead
+		if (is_dead)
+			break; // Exit the loop if philo is dead
 		// printf("philo %d cycle philo->dead: %d\n", philo->id, *philo->dead);
 		// death(philo);
 		bethlehem(philo);
@@ -55,46 +55,56 @@ void *life(void *arg)
 	return (NULL);
 }
 
-void *god(void *arg)
+void	*god(void *arg)
 {
-    t_program *program = (t_program *)arg;
-    size_t current_time;
-    int i;
+	t_program *program = (t_program *)arg;
+	size_t current_time;
+	int i;
+	int	calc;
 
-    while (!program->dead_flag)
-    {
-        for (i = 0; i < program->philos[0].num_of_philos; i++)
-        {
-            current_time = get_current_time();
-            if (current_time - program->philos[i].last_meal > program->philos[i].time_to_die)
-            {
-                // Lock the shared write lock permanently to stop all printing
-                pthread_mutex_lock(program->philos[i].write_lock);
-                // printf("current_time %ld\n", current_time);
-                // printf("program->philos[i].last_meal %ld\n", program->philos[i].last_meal);
-                // printf("program->philos[i].time_to_die %ld\n", program->philos[i].time_to_die);
-                // printf("(current_time - program->philos[i].last_meal > program->philos[i].time_to_die) %ld\n", current_time - program->philos[i].last_meal - program->philos[i].time_to_die);
-                printf("%ld %d died\n", get_current_time(), program->philos[i].id);
+	while (!program->dead_flag)
+	{
+		// printf("god: while (!program->dead_flag)\n");
+		i = 0;
+		while (i < program->philos[0].num_of_philos)
+		{
+			// printf("god: while (i < program->philos[0].num_of_philos)\n");
+			current_time = get_current_time();
+			if (program->philos[i].last_meal)
+				calc = current_time - program->philos[i].last_meal - program->philos[i].time_to_die;
+			else
+				calc = current_time - program->philos[i].time_to_die - program->philos[i].start_time;
+			if (!calc)
+			{
+				// Lock the shared write lock permanently to stop all printing
+				pthread_mutex_lock(program->philos[i].write_lock);
+				// printf("current_time %ld\n", current_time);
+				// printf("program->philos[i].last_meal %ld\n", program->philos[i].last_meal);
+				// printf("program->philos[i].time_to_die %ld\n", program->philos[i].time_to_die);
+				// printf("(current_time - program->philos[i].last_meal > program->philos[i].time_to_die) %ld\n", current_time - program->philos[i].last_meal - program->philos[i].time_to_die);
+				printf("%ld %d died\n", get_current_time(), program->philos[i].id);
+
 				// remove this line, its for debugging
-                // pthread_mutex_unlock(program->philos[i].write_lock);
+				pthread_mutex_unlock(program->philos[i].write_lock);
 
-                // Signal death without unlocking the write lock
-                pthread_mutex_lock(&program->dead_lock);
-                program->dead_flag = 1;
-                pthread_mutex_unlock(&program->dead_lock);
-                
-                // Optionally, break here if you want to stop checking other philosophers once one is dead
-                break;
-            }
-        }
-        // Short sleep to prevent a tight loop consuming too much CPU
-        // ft_usleep(10); // Assuming ft_usleep is a wrapper for usleep or similar
-    }
-    // Do not unlock the write_lock here to maintain the block on printing
-    return NULL;
+				// Signal death without unlocking the write lock
+				pthread_mutex_lock(&program->dead_lock);
+				program->dead_flag = 1;
+				pthread_mutex_unlock(&program->dead_lock);
+				
+				// Optionally, break here if you want to stop checking other philosophers once one is dead
+				break;
+			}
+			i++;
+		}
+		// Short sleep to prevent a tight loop consuming too much CPU
+		// ft_usleep(10); // Assuming ft_usleep is a wrapper for usleep or similar
+	}
+	// Do not unlock the write_lock here to maintain the block on printing
+	return NULL;
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_program			program;
 	t_philo				philos[201];
@@ -103,6 +113,7 @@ int main(int argc, char **argv)
 
 	if (!revelation(argc, argv))
 		return (0);
+	print_params(argc, argv);
 	init_program(&program, philos);
 	spawn_forks(forks, atoi_num_only(argv[1]));
 	init_philosophers(&program, philos, argv, forks);

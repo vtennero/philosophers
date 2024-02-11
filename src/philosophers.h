@@ -63,6 +63,7 @@ size_t get_current_time(void);
 // debug
 void print_philo_vars(t_philo *philo);
 void print_all_philos(t_program *program);
+void	print_params(int argc, char **argv);
 
 // utils
 size_t get_current_time(void);
