@@ -72,5 +72,14 @@ int ft_usleep(size_t milliseconds);
 void bethlehem(t_philo *philo);
 void gethsemane(t_philo *philo);
 void mountsinai(t_philo *philo);
+int can_continue(t_philo *philo);
+void unlock_dead_forks(void *arg);
+void	unlock_dead_meal(void *arg);
+
+
+int	death(t_philo *philo);
+void    print_message(char *str, t_philo *philo, int id);
+int		spawn_philos_and_god(t_program *program, pthread_mutex_t *forks);
+int	peter(t_philo *philos);
 
 #endif

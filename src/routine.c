@@ -12,152 +12,37 @@
 
 #include "philosophers.h"
 
-int can_continue(t_philo *philo) {
-    int result;
-    pthread_mutex_lock(philo->dead_lock);
-	if (*philo->dead)
-		result = 0;
-	else
-		result = 1;
-    pthread_mutex_unlock(philo->dead_lock);
-    return result;
-}
-
 void bethlehem(t_philo *philo)
 {
-	pthread_mutex_lock(philo->write_lock);
-	printf("%ld %d bethlehem starts\n", get_current_time(), philo->id);
-	pthread_mutex_unlock(philo->write_lock);
 
-    if (!can_continue(philo)) return;
+	pthread_mutex_lock(philo->r_fork);
+	print_message("has taken a fork", philo, philo->id);
+	// handle 1 philo -> add here
+	pthread_mutex_lock(philo->l_fork);
+	print_message("has taken a fork", philo, philo->id);
 
-    pthread_mutex_lock(philo->l_fork);
-    if (!can_continue(philo)) return;
+	philo->eating = 1;
+	print_message("is eating", philo, philo->id);
 
-    if (can_continue(philo))
-	{
-        pthread_mutex_lock(philo->write_lock);
-        printf("%ld %d has taken a left fork\n", get_current_time(), philo->id);
-        pthread_mutex_unlock(philo->write_lock);
-    }
-
-    // Take right fork
-    pthread_mutex_lock(philo->r_fork);
-    if (!can_continue(philo)) return;
-
-    if (can_continue(philo))
-	{
-        pthread_mutex_lock(philo->write_lock);
-        printf("%ld %d has taken a fork\n", get_current_time(), philo->id);
-        pthread_mutex_unlock(philo->write_lock);
-    }
-    // Meal starts
-    if (can_continue(philo))
-	{
-        philo->last_meal = get_current_time();
-        philo->eating = 1;
-        pthread_mutex_lock(philo->write_lock);
-        printf("%ld %d is eating\n", get_current_time(), philo->id);
-        pthread_mutex_unlock(philo->write_lock);
-        ft_usleep(philo->time_to_eat);
-    }
+	pthread_mutex_lock(philo->meal_lock);
+	philo->last_meal = get_current_time();
+	ft_usleep(philo->time_to_eat);
+	philo->meals_eaten += 1;
+	pthread_mutex_unlock(philo->meal_lock);
+	philo->eating = 0;
 
     // Unlock forks and update status
     pthread_mutex_unlock(philo->r_fork);
     pthread_mutex_unlock(philo->l_fork);
-    philo->meals_eaten += 1;
-    philo->eating = 0;
-}
-
-// v1 bethelhem - doesnt handle dead flag properly
-
-void bethlehem1(t_philo *philo)
-{
-	pthread_mutex_lock(philo->dead_lock);
-	int is_dead = *philo->dead;
-	pthread_mutex_unlock(philo->dead_lock);
-	// pthread_mutex_lock(philo->write_lock);
-	// printf("philo %d bethlehem deadflag? %d\n", philo->id, *philo->dead);
-	// pthread_mutex_unlock(philo->write_lock);
-
-	// take left fork
-	pthread_mutex_lock(philo->l_fork);
-	if (!(is_dead))
-	{
-		pthread_mutex_lock(philo->write_lock);
-		printf("%ld %d has taken a fork\n", get_current_time(), philo->id);
-		pthread_mutex_unlock(philo->write_lock);
-	}
-	// take right fork
-	pthread_mutex_lock(philo->r_fork);
-	pthread_mutex_lock(philo->dead_lock);
-	is_dead = *philo->dead;
-	pthread_mutex_unlock(philo->dead_lock);
-	if (!(is_dead))
-	{
-		pthread_mutex_lock(philo->write_lock);
-		printf("%ld %d has taken a fork\n", get_current_time(), philo->id);
-		pthread_mutex_unlock(philo->write_lock);
-	}
-	// meal starts
-	philo->last_meal = get_current_time();
-	philo->eating = 1;
-	pthread_mutex_lock(philo->dead_lock);
-	is_dead = *philo->dead;
-	pthread_mutex_unlock(philo->dead_lock);
-	if (!(is_dead))
-	{
-		pthread_mutex_lock(philo->write_lock);
-		printf("%ld %d is eating\n", get_current_time(), philo->id);
-		pthread_mutex_unlock(philo->write_lock);
-	}
-	ft_usleep(philo->time_to_eat);
-
-	// unlock
-	pthread_mutex_unlock(philo->r_fork);
-	pthread_mutex_unlock(philo->l_fork);
-
-	// meal ends
-	philo->meals_eaten += 1;
-	philo->eating = 0;
-	// }
-	// printf("philo %d bethlehem ends\n", philo->id);
 }
 
 void gethsemane(t_philo *philo)
 {
-	pthread_mutex_lock(philo->write_lock);
-	printf("%ld %d gethsemane starts\n", get_current_time(), philo->id);
-	pthread_mutex_unlock(philo->write_lock);
-
-	pthread_mutex_lock(philo->dead_lock);
-	int is_dead = *philo->dead;
-	pthread_mutex_unlock(philo->dead_lock);
-	// printf("philo %d gethsemane\n", philo->id);
-	if (!(is_dead))
-	{
-		pthread_mutex_lock(philo->write_lock);
-		printf("%ld %d is sleeping\n", get_current_time(), philo->id);
-		pthread_mutex_unlock(philo->write_lock);
-	}
+	print_message("is sleeping", philo, philo->id);
 	ft_usleep(philo->time_to_sleep);
 }
 
 void mountsinai(t_philo *philo)
 {
-	pthread_mutex_lock(philo->write_lock);
-	printf("%ld %d mountsinai starts\n", get_current_time(), philo->id);
-	pthread_mutex_unlock(philo->write_lock);
-	
-	pthread_mutex_lock(philo->dead_lock);
-	int is_dead = *philo->dead;
-	pthread_mutex_unlock(philo->dead_lock);
-	// printf("philo %d mountsinai\n", philo->id);
-	if (!(is_dead))
-	{
-		pthread_mutex_lock(philo->write_lock);
-		printf("%ld %d is thinking\n", get_current_time(), philo->id);
-		pthread_mutex_unlock(philo->write_lock);
-	}
-	ft_usleep(1000);
+	print_message("is thinking", philo, philo->id);
 }
