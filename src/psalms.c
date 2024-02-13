@@ -12,61 +12,61 @@
 
 #include "philosophers.h"
 
-void print_philo_vars(t_philo *philo)
+void	print_philo_vars(t_philo *philo)
 {
-    printf("Philo ID: %d\n", philo->id);
-    printf("Eating: %d\n", philo->eating);
-    printf("Meals Eaten: %d\n", philo->meals_eaten);
-    printf("Last Meal: %zu\n", philo->last_meal);
-    printf("Time to Die: %zu\n", philo->time_to_die);
-    printf("Time to Eat: %zu\n", philo->time_to_eat);
-    printf("Time to Sleep: %zu\n", philo->time_to_sleep);
-    printf("Start Time: %zu\n", philo->start_time);
-    printf("Number of Philos: %d\n", philo->num_of_philos);
-    printf("Number of Times to Eat: %d\n", philo->num_times_to_eat);
-    printf("Dead Flag: %d\n", *(philo->dead));
+	printf("Philo ID: %d\n", philo->id);
+	printf("Eating: %d\n", philo->eating);
+	printf("Meals Eaten: %d\n", philo->meals_eaten);
+	printf("Last Meal: %zu\n", philo->last_meal);
+	printf("Time to Die: %zu\n", philo->time_to_die);
+	printf("Time to Eat: %zu\n", philo->time_to_eat);
+	printf("Time to Sleep: %zu\n", philo->time_to_sleep);
+	printf("Start Time: %zu\n", philo->start_time);
+	printf("Number of Philos: %d\n", philo->num_of_philos);
+	printf("Number of Times to Eat: %d\n", philo->num_times_to_eat);
+	printf("Dead Flag: %d\n", *(philo->dead));
 }
 
-void print_all_philos(t_program *program)
+void	print_all_philos(t_program *program)
 {
-    int i;
-    int num_philos;
+	int	i;
+	int	num_philos;
 
-    i = 0;
-    num_philos = program->philos[0].num_of_philos;
-    printf("[DEBUG] print_all_philos\n");
-    printf("[DEBUG] print_all_philos: num_philos = %d\n", num_philos);
-    while (i < num_philos)
-    {
-        printf("Philo %d:\n", i + 1);
-        print_philo_vars(&program->philos[i]);
-        printf("\n");
-        i++;
-    }
+	i = 0;
+	num_philos = program->philos[0].num_of_philos;
+	printf("[DEBUG] print_all_philos\n");
+	printf("[DEBUG] print_all_philos: num_philos = %d\n", num_philos);
+	while (i < num_philos)
+	{
+		printf("Philo %d:\n", i + 1);
+		print_philo_vars(&program->philos[i]);
+		printf("\n");
+		i++;
+	}
 }
 
 void	print_params(int argc, char **argv)
 {
-    printf("[DEBUG] Program Parameters\n");
-    if (argc == 5 || argc == 6)
+	printf("[DEBUG] Program Parameters\n");
+	if (argc == 5 || argc == 6)
 	{
 		printf("number_of_philosophers = %d\n", atoi_num_only(argv[1]));
 		printf("time_to_die = %d\n",  atoi_num_only(argv[2]));
 		printf("time_to_eat = %d\n",  atoi_num_only(argv[3]));
 		printf("time_to_sleep = %d\n",  atoi_num_only(argv[4]));
 	}
-    if (argc == 6)
+	if (argc == 6)
 		printf("number_of_times_each_philosopher_must_eat = %d\n", atoi_num_only(argv[5]));
-    printf("--------------------\n");
+	printf("--------------------\n");
 }
 
-void    print_message(char *str, t_philo *philo, int id)
+void	print_message(char *str, t_philo *philo, int id)
 {
 	size_t	time;
 
 	pthread_mutex_lock(philo->write_lock);
 	time = get_current_time() - philo->start_time;
 	if (!death(philo))
-		printf("%zu %d %s\n", time, id, str);
+		printf("%zu %d %s\n", time, id + 1, str);
 	pthread_mutex_unlock(philo->write_lock);
 }

@@ -1,6 +1,7 @@
 # Compiler and flags
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -Isrc/
+# CFLAGS = -Wall -Wextra -Werror -fsanitize=address -Isrc/
 TFLAG = -lpthread 
 
 # Directories
@@ -20,7 +21,7 @@ utils.c
 OBJ = $(addprefix $(OBJ_DIR)/, $(COMMON_SRC:.c=.o))
 
 # Executable name
-EXEC = philosophers
+EXEC = philo
 
 .PHONY: all clean fclean re
 

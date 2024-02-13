@@ -72,9 +72,6 @@ int ft_usleep(size_t milliseconds);
 void bethlehem(t_philo *philo);
 void gethsemane(t_philo *philo);
 void mountsinai(t_philo *philo);
-int can_continue(t_philo *philo);
-void unlock_dead_forks(void *arg);
-void	unlock_dead_meal(void *arg);
 
 
 int	death(t_philo *philo);
