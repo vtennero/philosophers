@@ -15,6 +15,7 @@ jericho.c \
 psalms.c \
 revelation.c \
 routine.c \
+god.c \
 utils.c
 
 # Object files for the program, including common functionalities

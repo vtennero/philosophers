@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "philosophers.h"
+#include "philosophers.h"
 
 static int	is_digit(int c)
 {
@@ -48,34 +48,21 @@ int	revelation(int argc, char **argv)
 	int		i;
 
 	i = 1;
-    if (argc != 6 && argc != 5)
-	{
-        printf("❌ Usage: %s number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n", argv[0]);
-		return (0);
-    }
+	if (argc != 6 && argc != 5)
+		return (printf(\
+		"❌ Usage: %s #philos time_to_die time_to_eat time_to_sleep #meals\n", \
+		argv[0]), 0);
 	while (i < argc)
 	{
 		if (atoi_num_only(argv[i]) == -1)
-		{
-			printf("❌ Invalid argument %d: %s\n", i, argv[i]);
-			return (0);
-		}
+			return (printf("❌ Invalid argument %d: %s\n", i, argv[i]), 0);
 		i++;
 	}
 	if (atoi_num_only(argv[1]) > 200)
-	{
-		printf("❌ number_of_philosophers must be less than or equal to 200.\n");
-		return (0);
-	}
-    if (atoi_num_only(argv[1]) <= 0 || atoi_num_only(argv[2]) <= 0 || atoi_num_only(argv[3]) <= 0 || atoi_num_only(argv[4]) < 0)
-	{
-        printf("❌ All arguments except the last one must be greater than 0.\n");
-		return (0);
-    }
-	if (argc == 6 && atoi_num_only(argv[5]) < 0)
-	{
-        printf("❌ All arguments except the last one must be greater than 0.\n");
-		return (0);
-	}
+		return (printf("❌ number_of_philosophers > 200.\n"), 0);
+	if (atoi_num_only(argv[1]) <= 0 || atoi_num_only(argv[2]) <= 0 \
+	|| atoi_num_only(argv[3]) <= 0 || atoi_num_only(argv[4]) < 0 \
+	|| (argc == 6 && atoi_num_only(argv[5]) < 0))
+		return (printf("❌ All arguments except the last one must be > 0.\n"), 0);
 	return (1);
 }

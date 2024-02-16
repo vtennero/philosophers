@@ -51,6 +51,18 @@ int	peter(t_philo *philos)
 	return (0);
 }
 
+void	spawn_forks(pthread_mutex_t *forks, int num_forks)
+{
+	int	i;
+
+	i = 0;
+	while (i < num_forks)
+	{
+		pthread_mutex_init(&forks[i], NULL);
+		i++;
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	t_program			program;
@@ -61,7 +73,7 @@ int	main(int argc, char **argv)
 		return (0);
 	init_program(&program, philos);
 	spawn_forks(forks, atoi_num_only(argv[1]));
-	init_philosophers(&program, philos, argv, forks);
+	init_pf(&program, philos, argv, forks);
 	spawn_philos_and_god(&program, forks);
 	cleanup(&program, forks, atoi_num_only(argv[1]));
 	return (1);
